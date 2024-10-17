@@ -185,14 +185,16 @@ function getModelViewMatrix() {
     // Apply translation: 0.3 in x-axis, -0.25 in y-axis
     let translationMatrix = createTranslationMatrix(0.3, -0.25, 0);
 
-    // Combine all transformations: scale -> rotate (X, Y, Z) -> translate
-    let modelViewMatrix = multiplyMatrices(identityMatrix, scaleMatrix);
-    modelViewMatrix = multiplyMatrices(modelViewMatrix, rotationXMatrix);
-    modelViewMatrix = multiplyMatrices(modelViewMatrix, rotationYMatrix);
+    let modelViewMatrix = multiplyMatrices(identityMatrix, translationMatrix);
     modelViewMatrix = multiplyMatrices(modelViewMatrix, rotationZMatrix);
-    modelViewMatrix = multiplyMatrices(modelViewMatrix, translationMatrix);
+    modelViewMatrix = multiplyMatrices(modelViewMatrix, rotationYMatrix);
+    modelViewMatrix = multiplyMatrices(modelViewMatrix, rotationXMatrix);
+    modelViewMatrix = multiplyMatrices(modelViewMatrix, scaleMatrix);
+
 
     // Return the final model view matrix as Float32Array
+    //console.log(modelViewMatrix)
+    //correct matrix
     return new Float32Array(modelViewMatrix);
 }
 
@@ -261,11 +263,11 @@ function getPeriodicMovement(startTime) {
     let translationMatrix = createTranslationMatrix(translationX, translationY, translationZ);
 
     // Combine all the transformations: scale -> rotate (X, Y, Z) -> translate
-    let modelViewMatrix = multiplyMatrices(identityMatrix, scaleMatrix);
-    modelViewMatrix = multiplyMatrices(modelViewMatrix, rotationXMatrix);
-    modelViewMatrix = multiplyMatrices(modelViewMatrix, rotationYMatrix);
+    let modelViewMatrix = multiplyMatrices(identityMatrix, translationMatrix);
     modelViewMatrix = multiplyMatrices(modelViewMatrix, rotationZMatrix);
-    modelViewMatrix = multiplyMatrices(modelViewMatrix, translationMatrix);
+    modelViewMatrix = multiplyMatrices(modelViewMatrix, rotationYMatrix);
+    modelViewMatrix = multiplyMatrices(modelViewMatrix, rotationXMatrix);
+    modelViewMatrix = multiplyMatrices(modelViewMatrix, scaleMatrix);
 
     // Return the final model view matrix
     return new Float32Array(modelViewMatrix);
